@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">7</string>
+
+    <string name="game_level">Level:</string>
+    <string name="game_find">Find:</string>
+    <string name="game_max_level">Record:</string>
+
+</resources>
