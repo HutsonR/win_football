@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // for debug
-        SharedPreferencesHelper.setUrl(this, "")
-        openPlaceholder()
+//        SharedPreferencesHelper.setUrl(this, "")
+//        openPlaceholder()
 
         // Инициализация Firebase Remote Config
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
@@ -50,25 +50,25 @@ class MainActivity : AppCompatActivity() {
         firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
 
         // Проверка, сохранена ли ссылка на устройстве
-//        if (SharedPreferencesHelper.getUrl(this) == null || SharedPreferencesHelper.getUrl(this) == "") {
-//            firebaseRemoteConfig.fetchAndActivate()
-//                .addOnCompleteListener(this) { task ->
-//                    if (task.isSuccessful) {
-//                        url = firebaseRemoteConfig.getString("url")
-//                        SharedPreferencesHelper.setUrl(this, url.toString())
-//                        openWebView(savedInstanceState)
-//                    } else {
-//                        Log.v(TAG, "Error firebase")
-//                    }
-//                }
-//        } else {
-//            if (!isInternetAvailable()) {
-//                showNoInternetDialog()
-//            } else {
-//                url = SharedPreferencesHelper.getUrl(this)
-//                openWebView(savedInstanceState)
-//            }
-//        }
+        if (SharedPreferencesHelper.getUrl(this) == null || SharedPreferencesHelper.getUrl(this) == "") {
+            firebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        url = firebaseRemoteConfig.getString("url")
+                        SharedPreferencesHelper.setUrl(this, url.toString())
+                        openWebView(savedInstanceState)
+                    } else {
+                        Log.v(TAG, "Error firebase")
+                    }
+                }
+        } else {
+            if (!isInternetAvailable()) {
+                showNoInternetDialog()
+            } else {
+                url = SharedPreferencesHelper.getUrl(this)
+                openWebView(savedInstanceState)
+            }
+        }
     }
 
     private fun openWebView(savedInstanceState: Bundle?) {
